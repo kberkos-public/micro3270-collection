@@ -13,6 +13,7 @@ roles:
       - "list"
       - "update"
       - "patch"
+      - "delete"
     resources:
       - "deployments"
     apiGroups:

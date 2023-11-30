@@ -4,6 +4,7 @@
 
   tasks:
     - name: Delete the Micro3270 deployment
+      delegate_to: localhost
       kubernetes.core.k8s:
         state: absent
         kind: Deployment
