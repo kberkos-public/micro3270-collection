@@ -1,0 +1,26 @@
+
+domain: ibm
+name: micro3270
+version: 1.0.0
+displayName: Micro3270
+description: This operator collection allows users to open a x3270 instance of a mapped endpoint in a Kubernetes pod in OpenShift
+
+roles:
+  - verbs:
+      - "create"
+      - "watch"
+      - "get"
+      - "list"
+      - "update"
+      - "patch"
+    resources:
+      - "deployments"
+    apiGroups:
+      - "apps"
+
+resources:
+  - kind: ZosMicro3270
+    displayName: micro3270
+    description: This CRD will control the connections made to the z/OS Endpoints 
+    playbook: playbooks/deploy-instance.yml
+    finalizer: playbooks/destroy-instance.yml

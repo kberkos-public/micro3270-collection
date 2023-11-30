@@ -1,0 +1,11 @@
+- name: Bring down a micro3270 instance
+  hosts: all
+  gather_facts: false
+
+  tasks:
+    - name: Delete the Micro3270 deployment
+      kubernetes.core.k8s:
+        state: absent
+        kind: Deployment
+        name: "ibm-micro3270-{{ ansible_operator_meta.name }}"
+        namespace: "{{ ansible_operator_meta.namespace }}"

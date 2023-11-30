@@ -1,0 +1,34 @@
+- name: Create a new micro3270 instance
+  hosts: all
+  gather_facts: false
+
+  tasks:
+    - name: Create a Micro3270 Deployment
+      delegate_to: localhost
+      kubernetes.core.k8s:
+        state: present
+        definition:
+          apiVersion: v1
+          kind: Deployment
+          metadata:
+            name: "ibm-micro3270-{{ ansible_operator_meta.name }}"
+            namespace: "{{ ansible_operator_meta.namespace }}"
+          spec:
+            replicas: 1
+            selector:
+              matchLabels:
+                app: "ibm-micro3270"
+            template:
+              metadata:
+                labels:
+                  app: "ibm-micro3270"
+              spec:
+                containers:
+                  - name: micro3270
+                    image: icr.io/zmodstack/micro3270
+                    imagePullPolicy: Always
+                    env:
+                      - name: ZOS_HOST
+                        value: "{{ ansible_host }}"
+                      - name: ZOS_PORT
+                        value: "23" # Hard code this for now for telnet
